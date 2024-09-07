@@ -1,27 +1,33 @@
 import React from 'react'
 import styled from "styled-components"
+import Fade from 'react-reveal/Fade';
 
-
-function Section({title,description,backgroundImg,leftBtnText,rightBtnText}) {
+function Section({title,para,backgroundImg,leftBtnText,rightBtnText}) {
   return (
     <Wrap bgImage={backgroundImg}>
-        <ItemText>
-            <h1>{title}</h1>
-            <p>{description}</p>
-        </ItemText>
+        <Fade bottom>
+        <ItemT>
+            <h1>{title}</h1>              {/*fade is an animation in react-reveal installed through npm*/}
+            <p>{para}</p>
+        </ItemT>
+        </Fade>
+
         <Buttons>
+        <Fade bottom>
         <ButtonGroup> 
             <LeftButton>
-                {leftBtnText}
-            </LeftButton>
+                 
+                {leftBtnText}           {/*dynaimic props used*/}
+            </LeftButton>          
 
-            { rightBtnText && 
+            { rightBtnText &&       // Only if right button is avaliable then only implement this statement 
                   <RightButton>
-                  {rightBtnText}
+                  {rightBtnText}    
                   </RightButton>
             
             }
         </ButtonGroup>
+        </Fade>
         <DonwArrow src='/images/down-arrow.svg'>
         </DonwArrow>
         </Buttons>
@@ -29,35 +35,44 @@ function Section({title,description,backgroundImg,leftBtnText,rightBtnText}) {
   )
 }
 
-export default Section
+export default Section;
 
 const Wrap = styled.div`
+    
     width: 100vw;
     height: 100vh;
     background-size: cover;
     background-position: center;
     background-repeat : no-repeat;
-    background-image: url('/images/model-s.jpg');
     display: flex;
     flex-direction: column ;
     justify-content : space-between; //vertical
     align-items : center; //horizontal 
-    background-image : ${props=>`url("/images/${props.bgImage}")`}
+    background-image : ${props=>`url("/images/${props.bgImage}")`};
+    scroll-snap-align:start;
+    z-index:1;
 
-`
+`;
 
-const ItemText= styled.div`
+const ItemT= styled.div`
      padding-top :15vh;
      text-align : center;
-`
+     font-size: 20px;
+     
+`;
+
+const Buttons=styled.div`
+    display:flex;
+    flex-direction:column;
+`;
 
 const ButtonGroup=styled.div`
    display: flex;
-   margin-bottom : 30px;
+   gap: 25px
    @media (max-width: 768px){
      flex-direction : column;
    }
-`
+`;
 
 const LeftButton = styled.div`
    background-color :rgba(23, 26, 32, 0.8);
@@ -72,7 +87,8 @@ const LeftButton = styled.div`
    text-transform : uppercase;
    font-size : 12px;
    cursor: pointer;
-   margin: 8px;
+   font-weight: bold;
+   padding-top: 10px;
 
 `
 
@@ -85,11 +101,8 @@ const RightButton= styled(LeftButton)`
 const DonwArrow =styled.img`
     margin-top :20px;
     height: 40px;
-    overflow-x: hidden;
-    animation: animateDown infinite 1.5s;
+    margin-bottom: 20px;
+    animation: bounce infinite 1.5s;
     
 `
 
-const Buttons= styled.div`
-     
-`
